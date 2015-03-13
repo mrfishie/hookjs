@@ -1,5 +1,7 @@
 # Hookjs
 
+[![NPM](https://nodei.co/npm/hookjs.png)](https://nodei.co/npm/hookjs/)
+
 Hooks are a sort of hybrid between events and promises.
 
 Hooks allow actions and events to be easily customized by allowing the parent application to interrupt the 'event list'.
