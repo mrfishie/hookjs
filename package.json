@@ -1,0 +1,29 @@
+{
+  "name": "hooks",
+  "version": "0.1.0",
+  "description": "Hooks are a sort of combination between events and promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mrfishie/hookjs.git"
+  },
+  "keywords": [
+    "hook",
+    "event",
+    "emitter",
+    "promise",
+    "api"
+  ],
+  "author": "mrfishie <me@mrfishie.com> (http://mrfishie.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrfishie/hookjs/issues"
+  },
+  "homepage": "https://github.com/mrfishie/hookjs",
+  "dependencies": {
+    "wildcard": "^1.1.0"
+  }
+}
