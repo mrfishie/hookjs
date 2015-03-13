@@ -36,12 +36,12 @@ Hook names *should always* be namespaced, with a dot separating each section (al
 
 Install with NPM:
 
-	npm install hooks --save
+	npm install hookjs --save
 
 Inherit the HookEmitter class:
 
 ```javascript
-var HookEmitter = require('hooks'), // or require('hooks').HookEmitter
+var HookEmitter = require('hookjs'), // or require('hookjs').HookEmitter
 util = require('util')
 
 function myClass() { }
