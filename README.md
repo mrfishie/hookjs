@@ -34,6 +34,8 @@ Hooks are designed to compliment events. As a result, the HookEmitter class does
 
 Hook names *should always* be namespaced, with a dot separating each section (although this is not enforced). The first section should describe the type of object that 'does' the action, and the second section should be the action. More than 2 sections *are* allowed. Additionally, the first argument passed to the hook should always be the object that 'does' the action.
 
+**[Read more about hooks](http://mrfishie.com/get-fishing-with-hookjs/)**
+
 ### Usage
 
 Install with NPM:
