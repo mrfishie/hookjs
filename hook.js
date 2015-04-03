@@ -30,8 +30,9 @@ Hook.prototype.trigger = function(args) {
     if (this._running) return this;
     this._running = true;
 
+    var argCopy = args.slice(0);
+
     var self = this, cbs = this._callbacks, i = 0, x = 0;
-    var currentArgs = [];
 
     function doNext() {
         if (!self._running || i >= cbs.length) {
@@ -40,17 +41,17 @@ Hook.prototype.trigger = function(args) {
         }
 
         var nextArgs = arguments.length ? arraySlice.call(arguments, 0) : [];
-        for (x = 0; x < nextArgs.length; x++) {
-            if (nextArgs[x] != null) currentArgs[x] = nextArgs[x];
+        var currentCallback = cbs[i++];
+        for (x = 0; x < nextArgs.length; x++ ){
+            if (nextArgs[x] != null) argCopy[x] = nextArgs[x];
         }
 
-        var currentCallback = cbs[i++];
-        var provideArgs = args.slice(0), hasTriggered = false;
+        var provideArgs = argCopy.slice(0), hasTriggered = false;
+
         provideArgs.push(function() {
             if (hasTriggered) return;
             return doNext.apply(this, arguments);
         });
-        provideArgs.push(currentArgs);
         return currentCallback.apply(global, provideArgs);
     }
     doNext();

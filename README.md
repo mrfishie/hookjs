@@ -22,13 +22,13 @@ You might have some kind of API (e.g. a game server interface) where you want th
 
 With hooks, the application would trigger a 'hook' when an action occurs, and provide a default handler for this. When the hook is triggered, all callbacks in the 'hook event list' will be executed in reverse-order, meaning the first to be added will be called last and vice versa.
 
-Each callback is provided with the arguments provided to the trigger function, as well as a `next` function and `args` array.
+Each callback is provided with the arguments provided to the trigger function, as well as a `next` function.
 
 To call the next callback in the chain, each callback would call it's `next` function. A callback can call this function whenever it wants, however calling it twice or more will not work. If the hook has been triggered again in the time between when the callback is called and the next function is called, or the hook is cancelled, the next function will not do anything.
 
 If a hook wishes to 'end the chain', it can simply not call the `next` function. This might be useful if you want to prevent the default hook from being called.
 
-Arguments can be provided to the `next` function. These arguments will be provided in the `args` array in the next callback. Arguments will be retained until overwritten (i.e if the next function is called with arguments `1, 2`, and then called with one argument: `3`, the resulting value of the `args` array will be `3, 2`).
+Arguments can be provided to the `next` function. These arguments will override the arguments provided by triggering the hook for any further callbacks in the chain (i.e if the hook is originally triggered with arguments `1, 2` and then next is called with one arguments: `3`, the arguments provided to the next callback will be `3, 2`).
 
 Hooks are designed to compliment events. As a result, the HookEmitter class does not overwrite any functions that would be used for an EventEmitter (e.g. `emit`)
 
@@ -64,7 +64,7 @@ myClass.hook('user.doesSomething', function(user, next) {
 Trigger a hook:
 
 ```javascript
-myClass.trigger('user.doesSomething', user);
+myClass.triggerHook('user.doesSomething', user);
 ```
 
 ### API Reference
@@ -73,7 +73,7 @@ myClass.trigger('user.doesSomething', user);
 
 Creates a `HookEmitter` object with no hooks.
 
-**HookEmitter#hook(string name, function cb)**
+**HookEmitter#hook(string name, function cb<args..., function next>)**
 
 Add a hook callback (`cb`) to the hook `name`.
 Returns self for method chaining.
