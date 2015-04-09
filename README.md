@@ -48,16 +48,20 @@ Inherit the HookEmitter class:
 
 ```javascript
 var HookEmitter = require('hookjs'), // or require('hookjs').HookEmitter
-util = require('util')
+    util = require('util');
 
-function myClass() { }
-util.inherits(HookEmitter, myClass);
+function MyClass() {
+    HookEmitter.call(this);
+}
+util.inherits(MyClass, HookEmitter);
+
+var instance = new MyClass();
 ```
 
 Add a hook:
 
 ```javascript
-myClass.hook('user.doesSomething', function(user, next) {
+instance.hook('user.doesSomething', function(user, next) {
 	/* ... */
     next();
 });
@@ -66,7 +70,7 @@ myClass.hook('user.doesSomething', function(user, next) {
 Trigger a hook:
 
 ```javascript
-myClass.triggerHook('user.doesSomething', user);
+instance.triggerHook('user.doesSomething', user);
 ```
 
 ### API Reference
