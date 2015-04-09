@@ -36,6 +36,19 @@ HookEmitter.prototype.hook = function(name, cb) {
 };
 
 /**
+ * Add a handler to a hook that triggers after the default
+ *
+ * @param {String} name The name of the hook
+ * @param {Function} cb The hook callback
+ * @returns {HookEmitter} this
+ */
+HookEmitter.prototype.hookAfter = function(name, cb) {
+    if (!this._hooks[name]) this._hooks[name] = { items: [], obj: false };
+    this._hooks[name].items.push(cb);
+    return this;
+};
+
+/**
  * Triggers a hook
  *
  * @param {String} name The name of the hook

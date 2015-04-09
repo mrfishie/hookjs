@@ -20,7 +20,9 @@ game.hook('player.talkTo', function(basePlayer, player2, message, next) {
 
 You might have some kind of API (e.g. a game server interface) where you want the parent application to be able to 'inject' events or prevent the default actions from occuring. This is where hooks come in.
 
-With hooks, the application would trigger a 'hook' when an action occurs, and provide a default handler for this. When the hook is triggered, all callbacks in the 'hook event list' will be executed in reverse-order, meaning the first to be added will be called last and vice versa.
+With hooks, the application would trigger a 'hook' when an action occurs, and provide a default handler for this. When the hook is triggered, all callbacks in the 'hook event list' will be executed.
+
+Hook callbacks are normally executed in reverse order, meaning the first to be added will be the last, and vice versa. This is to allow for a default hook callback to be added, and have all other callbacks called before the default. Callbacks can also be added after the default with the `hookAfter` function, in which case they will be fired in the order supplied, after the default hook.
 
 Each callback is provided with the arguments provided to the trigger function, as well as a `next` function.
 
@@ -78,19 +80,23 @@ Creates a `HookEmitter` object with no hooks.
 Add a hook callback (`cb`) to the hook `name`.
 Returns self for method chaining.
 
-**HookEmitter#triggerHook(name, args...)**
+**HookEmitter#hookAfter(string name, function cb<args..., function next>)**
+
+Adds a hook callback (`cb`) to the hook `name`, added in reverse order. Returns self for method chaining.
+
+**HookEmitter#triggerHook(string name, args...)**
 
 Trigger the hook `name`.
 Returns the `Hook` object.
 
-**HookEmitter#cancelHook(name)**
+**HookEmitter#cancelHook(string name)**
 
-**HookEmitter#pauseHook(name)**
+**HookEmitter#pauseHook(string name)**
 
 Cancels or pauses the hook `name`. `name` can have wildcards (`*`), in which case any matching hooks will be cancelled or paused.
 Returns self for method chaining.
 
-**HookEmitter#resumeHook(name)**
+**HookEmitter#resumeHook(string name)**
 
 Resumes the hook `name`. `name` can have wildcards (`*`), in which case any matching hooks will be resumed.
 Returns self for method chaining.
@@ -98,6 +104,18 @@ Returns self for method chaining.
 #### Hook([function] callbacks)
 
 Creates a `Hook` object with the provided `callbacks` array.
+
+**Hook#hook(function cb)**
+
+**Hook#before(function cb)**
+
+Adds a hook in the normal manner. The same as `HookEmitter#hook`.
+Returns self for method chaining.
+
+**Hook#after(function cb)**
+
+Adds a hook in the reverse manner. The same as `HookEmitter#hookAfter`.
+Returns self for method chaining.
 
 **Hook#trigger(array args)**
 

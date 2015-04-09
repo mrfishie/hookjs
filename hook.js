@@ -19,6 +19,38 @@ function Hook(callbacks) {
 module.exports = Hook;
 
 /**
+ * Alias of Hook#before
+ *
+ * @see Hook#before
+ * @returns {Hook} this
+ */
+Hook.prototype.hook = function() {
+    return this.before.apply(this, arguments);
+};
+
+/**
+ * Add a hook before the default
+ *
+ * @param {Function} cb
+ * @returns {Hook} this
+ */
+Hook.prototype.before = function(cb) {
+    this._callbacks.unshift(cb);
+    return this;
+};
+
+/**
+ * Add a hook after the default
+ *
+ * @param {Function} cb
+ * @returns {Hook} this
+ */
+Hook.prototype.after = function(cb) {
+    this._callbacks.push(cb);
+    return this;
+};
+
+/**
  * Begins executing the hook list
  * If the list is already running (i.e hasn't been cancelled or has reached the end)
  * this will do nothing.
