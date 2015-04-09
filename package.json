@@ -1,6 +1,6 @@
 {
   "name": "hookjs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Hooks are a sort of combination between events and promises",
   "main": "index.js",
   "scripts": {
